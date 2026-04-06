@@ -250,18 +250,14 @@ body {
 .radio-btn input { position: absolute; opacity: 0; }
 .radio-btn.active, .radio-btn:hover { border-color: var(--primary); color: var(--text-main); background: rgba(59, 130, 246, 0.1); }
 
-@media (max-width: 900px) {
-    .calc-layout { grid-template-columns: 1fr; gap: 20px; }
-    .workspace-controls, .workspace-output { width: 100%; min-width: unset; }
-    .preset-btns { flex-wrap: wrap; }
-    .preset-btns .btn-preset { flex: 1 1 auto; }
-}
+
 
 /* =========================================
    CALCULATOR UI EXTENSIONS
    ========================================= */
 .calc-page { background-color: #050a15; }
 .calc-layout { grid-template-columns: 380px 1fr; align-items: start; gap: 30px; }
+
 .calc-screen { 
     min-height: 80px; 
     font-size: 1.3rem; 
@@ -497,3 +493,11 @@ footer { padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.05); margin-t
 }
 
 @keyframes slideInX { from { opacity: 0; transform: translateX(-15px); } to { opacity: 1; transform: translateX(0); } }
+
+@media (max-width: 900px) {
+    .calc-layout { grid-template-columns: 1fr !important; gap: 20px; }
+    .workspace-controls, .workspace-output { width: 100%; min-width: unset; }
+    .preset-btns { flex-wrap: wrap; }
+    .preset-btns .btn-preset { flex: 1 1 auto; }
+}
+@media (max-width: 650px) { .interactive-workspace, .calc-layout { display: flex !important; flex-direction: column !important; width: 100% !important; box-sizing: border-box !important; } .container { padding: 0 10px !important; } .workspace-controls { width: 100% !important; box-sizing: border-box !important; } .radio-grid { grid-template-columns: 1fr 1fr !important; } }
