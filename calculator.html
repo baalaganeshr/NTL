@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetSynth Calculator</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="calc-page">
+    <!-- Navbar -->
+    <nav class="glass-nav">
+        <div class="container nav-content">
+            <div class="logo">
+                <i class="fa-solid fa-microchip"></i> NetSynth App
+            </div>
+            <div class="nav-links">
+                <a href="index.html"><i class="fa-solid fa-arrow-left"></i> Return to Theory</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-30">
+        <div class="interactive-workspace calc-layout">
+            <!-- Calculator Input Panel -->
+            <div class="workspace-controls calc-controls">
+                <div class="calc-header">
+                    <h2><i class="fa-solid fa-calculator"></i> Synthesis Engine</h2>
+                    <p class="text-muted text-sm">Input your rational $s$-domain function.</p>
+                </div>
+
+                <!-- Live Math Render Area -->
+                <div class="math-given-box calc-screen" id="calc-screen-display">
+                    <span class="placeholder">Awaiting rational equation...</span>
+                </div>
+
+                <!-- Input Raw String Buffer (Hidden) -->
+                <input type="hidden" id="raw-equation" value="">
+
+                <!-- Quick Prefills -->
+                <div class="presets mt-20">
+                    <label class="text-sm">Preset Test Cases:</label>
+                    <div class="preset-btns">
+                        <button class="btn-preset" data-val="ex1" title="Z(s) = (s² + 3) / s(s² + 1)">Test Z(s)</button>
+                        <button class="btn-preset" data-val="ex2" title="Y(s) = s(s² + 2) / (s² + 4)">Test Y(s)</button>
+                        <button class="btn-preset" data-val="clear"><i class="fa-solid fa-eraser"></i> Clear</button>
+                    </div>
+                </div>
+
+                <!-- Virtual Math Keypad -->
+                <div class="keypad mt-20">
+                    <button class="key" data-key="s">s</button>
+                    <button class="key" data-key="s^2">s²</button>
+                    <button class="key" data-key="s^3">s³</button>
+                    <button class="key" data-key="/">/</button>
+                    
+                    <button class="key" data-key="(">(</button>
+                    <button class="key" data-key=")">)</button>
+                    <button class="key" data-key="+">+</button>
+                    <button class="key" data-key="-">-</button>
+                    
+                    <button class="key" data-key="1">1</button>
+                    <button class="key" data-key="2">2</button>
+                    <button class="key" data-key="3">3</button>
+                    <button class="key" data-key="Z(s) = ">Z(s)=</button>
+                    
+                    <button class="key" data-key="4">4</button>
+                    <button class="key" data-key="5">5</button>
+                    <button class="key" data-key="6">6</button>
+                    <button class="key" data-key="Y(s) = ">Y(s)=</button>
+                    
+                    <button class="key" data-key="7">7</button>
+                    <button class="key" data-key="8">8</button>
+                    <button class="key" data-key="9">9</button>
+                    <button class="key" data-key="0">0</button>
+                    
+                    <button class="key" data-key="DEL" style="grid-column: span 4; background: rgba(239, 68, 68, 0.1); color: #f87171; border-color: rgba(239, 68, 68, 0.3); font-weight: 600;">
+                        <i class="fa-solid fa-delete-left"></i> Delete
+                    </button>
+                </div>
+
+                <div class="control-group mt-20">
+                    <label><i class="fa-solid fa-filter"></i> Synthesis Method</label>
+                    <div class="radio-grid" id="method-group">
+                        <label class="radio-btn active"><input type="radio" name="method" value="foster1" checked>Foster I</label>
+                        <label class="radio-btn"><input type="radio" name="method" value="foster2">Foster II</label>
+                        <label class="radio-btn"><input type="radio" name="method" value="cauer1">Cauer I</label>
+                        <label class="radio-btn"><input type="radio" name="method" value="cauer2">Cauer II</label>
+                    </div>
+                </div>
+
+                <button id="btn-synthesize" class="btn-primary w-full mt-20">
+                    <i class="fa-solid fa-bolt"></i> Synthesize Network
+                </button>
+            </div>
+
+            <!-- Output Panel -->
+            <div class="workspace-output">
+                <div id="loading" class="loading-overlay hidden">
+                    <div class="spinner"></div>
+                    <p>Executing Symbolic Matrices...</p>
+                </div>
+
+                <div id="output-content" class="fade-in">
+                    <!-- Default Screen before compute -->
+                    <div id="init-screen" class="text-center mt-30 p-20 card-sub">
+                        <i class="fa-solid fa-microchip " style="font-size: 3rem; color: var(--primary); margin-bottom: 20px;"></i>
+                        <h3>System Ready</h3>
+                        <p class="text-muted">Type an equation using the pad and select a method to begin analysis.</p>
+                    </div>
+
+                    <!-- Steps Wrapper (Hidden by default) -->
+                    <div id="results-wrapper" class="hidden">
+                        <div class="derivation-panel">
+                            <h3><i class="fa-solid fa-square-root-variable"></i> Evaluated Steps</h3>
+                            <div class="stepper" id="derivation-steps"></div>
+                        </div>
+
+                        <div class="circuit-panel mt-30">
+                            <h3><i class="fa-solid fa-diagram-project"></i> Physical Blueprint</h3>
+                            <div class="blueprint-container">
+                                <div class="blueprint-grid"></div>
+                                <div id="circuit-diagram" class="real-circuit"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container text-center">
+            <p class="text-muted"><i class="fa-solid fa-laptop-code"></i> Engineering Synthesis Terminal</p>
+        </div>
+    </footer>
+
+    <script src="calc.js"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Synthesis | Home</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="glass-nav">
+        <div class="container nav-content">
+            <div class="logo">
+                <i class="fa-solid fa-microchip"></i> NetSynth
+            </div>
+            <div class="nav-links">
+                <a href="#theory"><i class="fa-solid fa-book-open"></i> Theory</a>
+                <a href="#methods"><i class="fa-solid fa-code-compare"></i> Methods</a>
+                <a href="calculator.html" class="btn-primary-outline"><i class="fa-solid fa-calculator"></i> Launch Calculator</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container hero-content">
+            <div class="badge">Academic Mini Project</div>
+            <h1 class="bounce-up-1">Interactive Network Synthesis</h1>
+            <h2 class="gradient-text bounce-up-2">Foster and Cauer Forms</h2>
+            <p class="bounce-up-3">A polished educational visualization tool demonstrating step-by-step mathematical LC network realization from driving-point impedance and admittance functions.</p>
+            <div class="hero-actions bounce-up-4">
+                <a href="calculator.html" class="btn-primary">Launch Synthesis Calculator <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Theory Cards Section -->
+        <section id="theory" class="section-block">
+            <div class="section-header">
+                <h2><i class="fa-solid fa-graduation-cap"></i> Theoretical Foundation</h2>
+                <p>Understanding the core concepts of Network Theory</p>
+            </div>
+            
+            <div class="grid-2">
+                <div class="card hover-lift">
+                    <div class="card-icon"><i class="fa-solid fa-share-nodes"></i></div>
+                    <h3>Driving-Point Functions</h3>
+                    <p>Functions evaluated at a single port of a network. They must be Positive Real (PR) to form a physically realizable passive network.</p>
+                    <ul class="custom-list">
+                        <li><strong>Impedance Z(s):</strong> $V(s)/I(s)$</li>
+                        <li><strong>Admittance Y(s):</strong> $I(s)/V(s)$</li>
+                    </ul>
+                </div>
+                <div class="card hover-lift">
+                    <div class="card-icon"><i class="fa-solid fa-wave-square"></i></div>
+                    <h3>Positive Real (PR) Conditions</h3>
+                    <p>For an LC lossless network, all poles and zeros must lay on the imaginary axis (jω-axis) and must alternate with each other seamlessly.</p>
+                </div>
+            </div>
+            
+            <div class="card glass-card mt-30 text-center">
+                <h3>Why Foster and Cauer Forms?</h3>
+                <p class="max-w-800 mx-auto text-muted">They act as the classical standard to realize reactive network diagrams. <b>Foster forms</b> yield series/parallel modularity using partial fractions, while <b>Cauer forms</b> construct filter-like ladder networks through continued fractions.</p>
+            </div>
+        </section>
+
+        <!-- Method Diagram Overview -->
+        <section id="methods" class="section-block" style="border-bottom: none;">
+            <div class="section-header">
+                <h2><i class="fa-solid fa-sitemap"></i> Synthesis Comparison</h2>
+                <p>How the four canonical algebraic forms differ structurally</p>
+            </div>
+            
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="modern-table">
+                        <thead>
+                            <tr>
+                                <th>Synthesis Technique</th>
+                                <th>Base Input</th>
+                                <th>Math Expansion</th>
+                                <th>Topology</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="badge foster">Foster Form I</span></td>
+                                <td>$Z(s)$</td>
+                                <td>Partial Fraction</td>
+                                <td>Series of parallel LC tanks</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge foster">Foster Form II</span></td>
+                                <td>$Y(s)$</td>
+                                <td>Partial Fraction</td>
+                                <td>Parallel of series LC branches</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge cauer">Cauer Form I</span></td>
+                                <td>$Z(s)$ <i>(Desc powers)</i></td>
+                                <td>Continued Fraction</td>
+                                <td>LC Ladder (Low-pass)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge cauer">Cauer Form II</span></td>
+                                <td>$Z(s)$ <i>(Asc powers)</i></td>
+                                <td>Continued Fraction</td>
+                                <td>LC Ladder (High-pass)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="text-center mt-30">
+                <a href="calculator.html" class="btn-primary" style="padding: 16px 32px; font-size: 1.1rem;">
+                    <i class="fa-solid fa-calculator"></i> Proceed to Interactive Calculator Phase
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Project Footer -->
+    <footer>
+        <div class="container text-center">
+            <p class="text-muted"><i class="fa-solid fa-code"></i> Developed with HTML/CSS/JS + KaTeX for Network Theory Mini-Project</p>
+        </div>
+    </footer>
+    <script>
+        // Render simple inline math manually for theory page.
+        // KaTeX is loaded with `defer`, so wait until DOMContentLoaded.
+        window.addEventListener('DOMContentLoaded', () => {
+            if (!window.katex) return;
+            document.querySelectorAll('.custom-list li, td').forEach(el => {
+                el.innerHTML = el.innerHTML.replace(/\$([^\$]+)\$/g, (match, p1) => {
+                    return window.katex.renderToString(p1, { throwOnError: false });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
